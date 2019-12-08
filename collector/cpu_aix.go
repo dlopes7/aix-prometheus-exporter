@@ -24,10 +24,9 @@ int getCPUTicks(uint64_t **cputicks, size_t *cpu_ticks_len) {
 	if(statp==NULL){
 			return -1;
 	}
+	strcpy(firstcpu.name, FIRST_CPU);
 	ncpus = perfstat_cpu(&firstcpu, statp, sizeof(perfstat_cpu_t), cputotal);
-	if (ncpus <= 0) {
-		ncpus = cputotal;
-	}
+
 
 	*cpu_ticks_len = ncpus*4;
 	*cputicks = (uint64_t *) malloc(sizeof(uint64_t)*(*cpu_ticks_len));
