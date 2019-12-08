@@ -21,7 +21,6 @@ func NewCPUCollector() (Collector, error) {
 }
 
 func (c *statCollector) Update(ch chan<- prometheus.Metric) error {
-
 	var fieldsCount = 4
 	cpuFields := []string{"user", "sys", "wait", "idle"}
 
