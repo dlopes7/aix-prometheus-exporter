@@ -17,16 +17,15 @@ int getCPUTicks(uint64_t **cputicks, size_t *cpu_ticks_len) {
 
 	cputotal = perfstat_cpu(NULL, NULL, sizeof(perfstat_cpu_t), 0);
 	if (cputotal <= 0){
-        return -1;
-   }
+		return -1;
+	}
 
 	statp = calloc(cputotal, sizeof(perfstat_cpu_t));
 	if(statp==NULL){
-			return -1;
+		return -1;
 	}
 	strcpy(firstcpu.name, FIRST_CPU);
 	ncpus = perfstat_cpu(&firstcpu, statp, sizeof(perfstat_cpu_t), cputotal);
-
 
 	*cpu_ticks_len = ncpus*4;
 	*cputicks = (uint64_t *) malloc(sizeof(uint64_t)*(*cpu_ticks_len));
@@ -71,8 +70,8 @@ func (c *statCollector) Update(ch chan<- prometheus.Metric) error {
 	cpuFields := []string{"user", "sys", "wait", "idle"}
 
 	var (
-		cpuTimesC		*C.uint64_t
-		cpuTimesLength	C.size_t
+		cpuTimesC      *C.uint64_t
+		cpuTimesLength C.size_t
 	)
 
 	if C.getCPUTicks(&cpuTimesC, &cpuTimesLength) == -1 {
